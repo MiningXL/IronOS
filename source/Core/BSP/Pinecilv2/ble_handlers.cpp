@@ -35,7 +35,19 @@
 
 extern TickType_t    lastMovementTime;
 extern OperatingMode currentOperatingMode;
+
 extern OperatingMode newExternOperatingMode;
+extern int32_t accelLastX;
+extern int32_t accelLastY;
+extern int32_t accelLastZ;
+
+#pragma pack(push,1)
+struct accelLast_t {
+  int32_t x;
+  int32_t y;
+  int32_t z;
+};
+#pragma pack(pop)
 
 int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, u16_t len, u16_t offset) {
   if (attr == NULL || attr->uuid == NULL) {
@@ -300,6 +312,26 @@ int ble_char_read_gamejam_callback(struct bt_conn *conn, const struct bt_gatt_at
       memcpy(buf, &temp, sizeof(temp));
       return sizeof(temp);
     }
+    case 1: // Get Last Accel Values
+    {
+      accelLast_t lastAccel = {
+        .x = accelLastX,
+        .y = accelLastY,
+        .z = accelLastZ,
+      };
+
+      int lenToCopy = sizeof(lastAccel) - offset;
+      if (lenToCopy > len) {
+        lenToCopy = len;
+      }
+      if (lenToCopy < 0) {
+        lenToCopy = 0;
+      }
+      memcpy(buf, ((uint8_t *)&lastAccel) + offset, lenToCopy);
+      return lenToCopy;
+      //memcpy(buf, &lastAccel, sizeof(lastAccel));
+      //return sizeof(lastAccel);
+    }
     default:
       break;
   }
@@ -335,6 +367,10 @@ int ble_char_write_gamejam_callback(struct bt_conn *conn, const struct bt_gatt_a
         newExternOperatingMode = static_cast<OperatingMode>(value);
         return len;
       }
+      case 1: // Set Last Accel doesn't exist
+        break;
+      default:
+        break;
     }
   }
   return 0;

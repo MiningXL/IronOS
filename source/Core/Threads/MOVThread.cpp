@@ -28,6 +28,9 @@
 #define MOVFilter 8
 uint8_t    accelInit        = 0;
 TickType_t lastMovementTime = 0;
+int32_t accelLastX, accelLastY, accelLastZ;
+uint16_t accelHz = 500;
+ 
 // Order matters for probe order, some Acceleromters do NOT like bad reads; and we have a bunch of overlap of addresses
 void detectAccelerometerVersion() {
 #ifdef ACCEL_MMA
@@ -198,6 +201,10 @@ void startMOVTask(void const *argument __unused) {
     avgy /= MOVFilter;
     avgz /= MOVFilter;
 
+    accelLastX = tx;
+    accelLastY = ty;
+    accelLastZ = tz;
+
     // Sum the deltas
     int32_t error = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));
     // So now we have averages, we want to look if these are different by more
@@ -221,6 +228,6 @@ void startMOVTask(void const *argument __unused) {
 
 #endif
 
-    vTaskDelay(TICKS_100MS); // Slow down update rate
+    vTaskDelay(TICKS_SECOND/accelHz); // Slow down update rate
   }
 }

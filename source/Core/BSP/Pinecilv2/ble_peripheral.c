@@ -262,6 +262,7 @@ static struct bt_gatt_attr ble_attrs_declaration[] = {
     BT_GATT_PRIMARY_SERVICE(BT_UUID_SVC_GAMEJAM_DATA),
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_GAMEJAM_MENU_SELECT, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
                           ble_char_read_gamejam_callback, ble_char_write_gamejam_callback, NULL),
+    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_GAMEJAM_GET_ACCELS, BT_GATT_CHRC_READ, BT_GATT_PERM_READ, ble_char_read_gamejam_callback, NULL, NULL),
 
 };
 
