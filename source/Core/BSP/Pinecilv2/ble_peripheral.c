@@ -251,16 +251,17 @@ static struct bt_gatt_attr ble_attrs_declaration[] = {
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_54, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
                            ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
 
-    // GameJam
-    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_GAMEJAM_MENU_SELECT, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
-                          ble_char_write_gamejam_callback, ble_char_read_gamejam_callback, NULL),
-
     /* Save & reset */
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_SAVE, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
                            ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
 
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_SETTINGS_VALUE_RESET, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
                            ble_char_read_setting_value_callback, ble_char_write_setting_value_callback, NULL),
+
+    // GameJam
+    BT_GATT_PRIMARY_SERVICE(BT_UUID_SVC_GAMEJAM_DATA),
+    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_GAMEJAM_MENU_SELECT, BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
+                          ble_char_read_gamejam_callback, ble_char_write_gamejam_callback, NULL),
 
 };
 

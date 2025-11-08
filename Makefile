@@ -125,6 +125,9 @@ docker-shell: docker-check  $(DOCKER_DEPS)
 docker-build: docker-check  $(DOCKER_DEPS)
 	$(DOCKER_CMD)  make  build-all
 
+docker-build-pinecil: docker-check  $(DOCKER_DEPS)
+	$(DOCKER_CMD)  make  default
+
 # delete docker image
 docker-clean-image:
 	-docker  rmi  ironos-builder:latest
@@ -238,7 +241,7 @@ clean-full: clean-build  docker-clean
 
 # phony targets
 .PHONY:  help  list
-.PHONY:  docker-check  docker-shell  docker-build  docker-clean-image  docker-clean-cache  docker-clean
+.PHONY:  docker-check  docker-shell  docker-build  docker-build-pinecil  docker-clean-image  docker-clean-cache  docker-clean
 .PHONY:  docs  docs-deploy
 .PHONY:  test-md  test-sh  test-py  test-ccpp  tests
 .PHONY:  build-all  build-multilang  ci

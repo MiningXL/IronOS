@@ -156,9 +156,9 @@ void guiRenderLoop(void) {
 
   // Check if the Bluetooth Device wants to change Screen
 
-  if (newExternOperatingMode != currentOperatingMode) {
-    newMode = newExternOperatingMode;
-  }
+  //if (newExternOperatingMode != currentOperatingMode) {
+  //  newMode = newExternOperatingMode;
+  //}
 
   // Post draw we handle any state transitions
 
@@ -175,7 +175,7 @@ void guiRenderLoop(void) {
     }
     memset(&context.scratch_state, 0, sizeof(context.scratch_state));
     currentOperatingMode = newMode;
-    newExternOperatingMode = newMode;
+    //newExternOperatingMode = newMode;
   }
 
   // If the transition marker is set, we need to make the next draw occur to the secondary buffer so we have something to transition to

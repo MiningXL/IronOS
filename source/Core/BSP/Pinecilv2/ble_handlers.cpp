@@ -333,6 +333,7 @@ int ble_char_write_gamejam_callback(struct bt_conn *conn, const struct bt_gatt_a
       case 0: // Set Current Menu
       {
         newExternOperatingMode = static_cast<OperatingMode>(value);
+        return len;
       }
     }
   }

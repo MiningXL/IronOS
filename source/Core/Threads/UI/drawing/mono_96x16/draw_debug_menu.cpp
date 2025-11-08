@@ -6,6 +6,7 @@
 extern osThreadId GUITaskHandle;
 extern osThreadId MOVTaskHandle;
 extern osThreadId PIDTaskHandle;
+extern OperatingMode newExternOperatingMode;
 
 void ui_draw_debug_menu(const uint8_t item_number) {
   OLED::setCursor(0, 0);                                   // Position the cursor at the 0,0 (top left)
@@ -85,6 +86,9 @@ void ui_draw_debug_menu(const uint8_t item_number) {
     }
     OLED::printNumber(hallEffectStrength, 6, FontStyle::SMALL);
   } break;
+  case 17:
+    OLED::printNumber(static_cast<uint8_t>(newExternOperatingMode), 8, FontStyle::SMALL);
+    break;
 #endif
 
   default:
