@@ -42,5 +42,5 @@ OperatingMode gui_GameJam_TempAdjust(const ButtonState buttonIn, guiContext *cxt
   }
   ui_draw_temperature_change();
 
-  return OperatingMode::TemperatureAdjust; // Stay in temp adjust
+  return OperatingMode::GameJamTemperatureAdjist; // Stay in temp adjust
 }
