@@ -39,6 +39,9 @@ enum class OperatingMode {
   TemperatureAdjust=7,  // Set point temperature adjustment
   UsbPDDebug=8,         // USB PD debugging information
   ThermalRunaway=9,     // Thermal Runaway warning state.
+
+  GameJamHome=16,           // GameJam Mode
+  GameJamTemperatureAdjist=17,
 };
 
 enum class TransitionAnimation {
@@ -79,6 +82,10 @@ OperatingMode performCJCC(const ButtonState buttons, guiContext *cxt);          
 OperatingMode showDebugMenu(const ButtonState buttons, guiContext *cxt);            // Debugging values
 OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt);              // Debugging menu that shows PD adaptor info
 OperatingMode showWarnings(const ButtonState buttons, guiContext *cxt);             // Shows user warnings if required
+
+// GameJam Screens
+OperatingMode gui_GameJam_TempAdjust(const ButtonState buttons, guiContext *cxt);   // For adjusting the setpoint temperature of the iron
+OperatingMode gui_GameJam_Home(const ButtonState buttons, guiContext *cxt);   // For adjusting the setpoint temperature of the iron
 
 // Common helpers
 int8_t getPowerSourceNumber(void); // Returns number ID of power source

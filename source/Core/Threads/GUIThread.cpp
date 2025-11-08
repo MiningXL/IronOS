@@ -38,6 +38,7 @@ extern "C" {
 
 ButtonState   buttonsAtDeviceBoot;                                      // We record button state at startup, incase of jumping to debug modes
 OperatingMode currentOperatingMode = OperatingMode::InitialisationDone; // Current mode we are rendering
+OperatingMode newExternOperatingMode = currentOperatingMode;
 guiContext    context;                                                  // Context passed to functions to aid in state during render passes
 
 OperatingMode handle_post_init_state();
@@ -138,11 +139,26 @@ OperatingMode guiHandleDraw(void) {
     /*TODO*/
     newMode = OperatingMode::HomeScreen;
     break;
+    
+
+  case OperatingMode::GameJamHome:
+    newMode = gui_GameJam_Home(buttons, &context);
+    break;
+  case OperatingMode::GameJamTemperatureAdjist:
+    newMode = gui_GameJam_TempAdjust(buttons, &context);
+    break;
   };
+
   return newMode;
 }
 void guiRenderLoop(void) {
   OperatingMode newMode = guiHandleDraw(); // This does the screen drawing
+
+  // Check if the Bluetooth Device wants to change Screen
+
+  if (newExternOperatingMode != currentOperatingMode) {
+    newMode = newExternOperatingMode;
+  }
 
   // Post draw we handle any state transitions
 
@@ -159,6 +175,7 @@ void guiRenderLoop(void) {
     }
     memset(&context.scratch_state, 0, sizeof(context.scratch_state));
     currentOperatingMode = newMode;
+    newExternOperatingMode = newMode;
   }
 
   // If the transition marker is set, we need to make the next draw occur to the secondary buffer so we have something to transition to

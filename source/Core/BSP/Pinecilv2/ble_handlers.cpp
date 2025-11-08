@@ -35,6 +35,7 @@
 
 extern TickType_t    lastMovementTime;
 extern OperatingMode currentOperatingMode;
+extern OperatingMode newExternOperatingMode;
 
 int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, u16_t len, u16_t offset) {
   if (attr == NULL || attr->uuid == NULL) {
@@ -281,6 +282,60 @@ int ble_char_write_setting_value_callback(struct bt_conn *conn, const struct bt_
     }
   }
   MSG((char *)"Unhandled attr write %d | %d\n", (uint32_t)attr->uuid, uuid_value);
+  return 0;
+}
+
+int ble_char_read_gamejam_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, u16_t len, u16_t offset) {
+  if (attr == NULL || attr->uuid == NULL) {
+    return 0;
+  }
+  // Byte 12 has the lowest part of the first UUID chunk
+  uint16_t uuid_value = ((struct bt_uuid_128 *)attr->uuid)->val[12];
+  uint32_t temp = 0;
+  switch (uuid_value)
+  {
+    case 0: // Get Current Menu
+    {
+      temp = static_cast<uint32_t>(currentOperatingMode);
+      memcpy(buf, &temp, sizeof(temp));
+      return sizeof(temp);
+    }
+    default:
+      break;
+  }
+  return 0;
+}
+
+int ble_char_write_gamejam_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, const void *buf, u16_t len, u16_t offset, u8_t flags) {
+  if (flags & BT_GATT_WRITE_FLAG_PREPARE) {
+    // Don't use prepare write data, execute write will upload data again.
+    BT_WARN((char *)"recv prepare write request\n");
+    return 0;
+  }
+  if (attr == NULL || attr->uuid == NULL) {
+    return 0;
+  }
+
+  if (flags & BT_GATT_WRITE_FLAG_CMD) {
+    // Use write command data.
+    BT_WARN((char *)"recv write command\n");
+  } else {
+    // Use write request / execute write data.
+    BT_WARN((char *)"recv write request / exce write\n");
+  }
+
+  uint8_t uuid_value = ((struct bt_uuid_128 *)attr->uuid)->val[12];
+  if (len == 2) {
+    uint16_t value = 0;
+    memcpy(&value, buf, sizeof(value));
+    switch (uuid_value)
+    {
+      case 0: // Set Current Menu
+      {
+        newExternOperatingMode = static_cast<OperatingMode>(value);
+      }
+    }
+  }
   return 0;
 }
 
