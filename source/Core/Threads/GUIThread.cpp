@@ -147,6 +147,9 @@ OperatingMode guiHandleDraw(void) {
   case OperatingMode::GameJamTemperatureAdjist:
     newMode = gui_GameJam_TempAdjust(buttons, &context);
     break;
+  case OperatingMode::GameJamShake:
+    newMode = gui_GameJam_Shake(buttons, &context);
+    break;
   };
 
   return newMode;

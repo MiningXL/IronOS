@@ -176,6 +176,13 @@ def get_debug_menu() -> List[str]:
     ]
 
 
+def get_gamejam_strings_list() -> List[str]:
+    return [
+        "FGJ",
+        "Shake!!!",
+    ]
+
+
 def get_accel_names_list() -> List[str]:
     return [
         "Scanning",
@@ -287,6 +294,8 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
     small_font_messages.extend(get_debug_menu())
     small_font_messages.extend(get_accel_names_list())
     small_font_messages.extend(get_power_source_list())
+
+    big_font_messages.extend(get_gamejam_strings_list())
 
     # collapse all strings down into the composite letters and store totals for these
     # Doing this seperately for small and big font
@@ -1049,6 +1058,15 @@ def get_translation_common_text(
     for c in get_power_source_list():
         translation_common_text += (
             f'\t "{convert_string(small_symbol_conversion_table, c)}",//{c} \n'
+        )
+    translation_common_text += "};\n\n"
+
+    # Game Jam
+    translation_common_text += "const char* GameJamStrings[] = {\n"
+
+    for c in get_gamejam_strings_list():
+        translation_common_text += (
+            f'\t "{convert_string(large_symbol_conversion_table, c)}",//{c} \n'
         )
     translation_common_text += "};\n\n"
 

@@ -53,6 +53,7 @@ extern const char *LargeSymbolSleep;
 extern const char *DebugMenu[];
 extern const char *AccelTypeNames[];
 extern const char *PowerSourceNames[];
+extern const char *GameJamStrings[];
 
 enum class SettingsItemIndex : uint8_t {
   DCInCutoff,

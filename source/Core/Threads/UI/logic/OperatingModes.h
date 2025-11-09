@@ -42,6 +42,7 @@ enum class OperatingMode {
 
   GameJamHome=16,           // GameJam Mode
   GameJamTemperatureAdjist=17,
+  GameJamShake=18,
 };
 
 enum class TransitionAnimation {
@@ -84,8 +85,9 @@ OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt);          
 OperatingMode showWarnings(const ButtonState buttons, guiContext *cxt);             // Shows user warnings if required
 
 // GameJam Screens
-OperatingMode gui_GameJam_TempAdjust(const ButtonState buttons, guiContext *cxt);   // For adjusting the setpoint temperature of the iron
 OperatingMode gui_GameJam_Home(const ButtonState buttons, guiContext *cxt);   // For adjusting the setpoint temperature of the iron
+OperatingMode gui_GameJam_TempAdjust(const ButtonState buttons, guiContext *cxt);   // For adjusting the setpoint temperature of the iron
+OperatingMode gui_GameJam_Shake(const ButtonState buttons, guiContext *cxt);   // For adjusting the setpoint temperature of the iron
 
 // Common helpers
 int8_t getPowerSourceNumber(void); // Returns number ID of power source

@@ -31,4 +31,8 @@ void ui_draw_usb_pd_debug_state(const uint16_t vbus_sense_state, const uint8_t s
 void ui_draw_usb_pd_debug_pdo(const uint8_t entry_num, const uint16_t min_voltage, const uint16_t max_voltage, const uint16_t current_a_x100, const uint16_t wattage);
 // Utils
 void printVoltage(void);
+
+// GameJam
+void ui_draw_gamejam_home(void); 
+void ui_draw_gamejam_shake(void); 
 #endif // UI_DRAWING_UI_DRAWING_HPP_
